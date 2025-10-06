@@ -7,14 +7,11 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 
-// Strong password validation schema
+// Simple password validation schema
 const passwordSchema = z
   .string()
-  .min(12, "A senha deve ter no mínimo 12 caracteres")
-  .regex(/[A-Z]/, "A senha deve conter pelo menos uma letra maiúscula")
-  .regex(/[a-z]/, "A senha deve conter pelo menos uma letra minúscula")
-  .regex(/[0-9]/, "A senha deve conter pelo menos um número")
-  .regex(/[^A-Za-z0-9]/, "A senha deve conter pelo menos um caractere especial");
+  .min(6, "A senha deve ter no mínimo 6 caracteres")
+  .regex(/^[A-Za-z]+$/, "A senha deve conter apenas letras");
 
 const emailSchema = z.string().email("Email inválido").max(255, "Email muito longo");
 const nameSchema = z.string().min(2, "Nome deve ter pelo menos 2 caracteres").max(100, "Nome muito longo");
@@ -142,7 +139,7 @@ const Register = () => {
                 disabled={loading}
               />
               <p className="text-xs text-muted-foreground mt-1">
-                Mínimo 12 caracteres, com maiúsculas, minúsculas, números e caracteres especiais
+                Mínimo 6 caracteres, apenas letras
               </p>
             </div>
 
